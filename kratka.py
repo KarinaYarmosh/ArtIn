@@ -2,9 +2,9 @@
 from tkinter import *
 import random
 
-GRID_SIZE = 8 #dodac wybor 8x8 czy 10x10 -> min bomby
+GRID_SIZE = 9 #dodac wybor 9x9 czy 15x15 czy 21x21  -> min bomby sie zmieniaja
 SQUARE_SIZE = 50
-MINES_NUM = 10
+#MINES_NUM = 12-15, 35-40, 68-70
 
 root = Tk()
 root.title("Saper")
