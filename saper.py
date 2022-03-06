@@ -1,33 +1,58 @@
-import pygame, sys
-from pygame.math import Vector2
-
-class SAPER:
-    def __init__(self):
-        self.x = 50
-        self.y = 50
-        self.pos = Vector2(self.x, self.y)
-
-    def draw_saper(self):
-        saper_rect = pygame.Rect(self.pos.x, self.pos.y, cell_size, cell_size)
-        #pygame.draw.rect(screen, (126, 166, 114), saper_rect)
-        pygame.draw.rect(screen, (126, 166, 114), pygame.Rect(50, 50, 50, 50), 2)
-        pygame.display.flip()
+import pygame
 
 pygame.init()
-cell_size = 40
-cell_number = 15
-screen = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_size))
+win = pygame.display.set_mode((540, 540))
+pygame.display.set_caption("Saper")
+x = 0
+y = 0
+width = 60
+height = 60
+step = 60
+run = True
 clock = pygame.time.Clock()
-
-saper = SAPER()
-
-while True:
+while run:
+    # opóźnienie w gorze
+    pygame.time.delay(85)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+            run = False
+    # obsługa zdarzeń
+    keys = pygame.key.get_pressed()
+    # warunki do zmiany pozycji obiektu
+    clock.tick(100)
+    # Keep player on the screen
 
-        screen.fill((0,255,255))
-        saper.draw_saper()
-        pygame.display.update()
-        clock.tick(60)
+    if keys[pygame.K_LEFT]:
+        check = x
+        check -= step
+        if check <= -60:
+            pass
+        else:
+            x -= step
+    if keys[pygame.K_RIGHT]:
+        check=x
+        check += step
+        if check >= 540:
+            pass
+        else:
+            x += step
+    if keys[pygame.K_UP]:
+        check = y
+        check -= step
+        if check <= -60:
+            pass
+        else:
+            y -= step
+    if keys[pygame.K_DOWN] :
+        check = y
+        check += step
+        if check >= 540:
+            pass
+        else:
+            y += step
+    # "czyszczenie" ekranu
+    win.fill((0, 0, 0))
+    # rysowanie prostokąta
+    pygame.draw.rect(win, (0, 255, 0), (x, y, width, height))
+    # odświeżenie ekranu
+    pygame.display.update()
