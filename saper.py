@@ -18,6 +18,7 @@ while run:
     pygame.time.delay(60)
     # opóźnienie w gorze
 
+    pygame.time.delay(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
