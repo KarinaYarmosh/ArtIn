@@ -53,6 +53,10 @@ while run:
     # "czyszczenie" ekranu
     win.fill((0, 0, 0))
     # rysowanie prostokąta
-    pygame.draw.rect(win, (0, 255, 0), (x, y, width, height))
+    dog_surf = pygame.image.load('saper.png')
+    dog_rect = dog_surf.get_rect(
+        center=(x+25,y+25))
+    win.blit(dog_surf, dog_rect)
+    # pygame.draw.rect(win, (0, 255, 0), (x, y, width, height))
     # odświeżenie ekranu
     pygame.display.update()
