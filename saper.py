@@ -5,8 +5,6 @@ win = pygame.display.set_mode((540, 540))
 pygame.display.set_caption("Saper")
 x = 0
 y = 0
-width = 60
-height = 60
 step = 60
 run = True
 clock = pygame.time.Clock()
