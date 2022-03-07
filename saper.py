@@ -1,27 +1,31 @@
 import pygame
+from kratka import draw_map
+from kratka import grass
 
 pygame.init()
 win = pygame.display.set_mode((540, 540))
 pygame.display.set_caption("Saper")
+TILE_SIZE = 60
+
 x = 0
 y = 0
-width = 60
-height = 60
 step = 60
 run = True
 clock = pygame.time.Clock()
+draw_map((9, 9), win)
+
 while run:
+    pygame.time.delay(60)
     # opóźnienie w gorze
-    pygame.time.delay(85)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
     # obsługa zdarzeń
     keys = pygame.key.get_pressed()
     # warunki do zmiany pozycji obiektu
-    clock.tick(100)
+    clock.tick(75)
     # Keep player on the screen
-
     saper_surf = saper_down = saper_up = pygame.image.load('saper.png')
     saper_left=pygame.image.load('saper_left.png')
     saper_right=pygame.image.load('saper_right.png')
@@ -35,6 +39,11 @@ while run:
         if check <= -60:
             pass
         else:
+            grass(x, y, win)
+            grass(x-60, y, win)
+            grass(x+60, y, win)
+            grass(x, y-60, win)
+            grass(x, y+60, win)
             x -= step
     if keys[pygame.K_RIGHT]:
         saper=saper_right
@@ -43,6 +52,11 @@ while run:
         if check >= 540:
             pass
         else:
+            grass(x - 60, y, win)
+            grass(x + 60, y, win)
+            grass(x, y - 60, win)
+            grass(x, y + 60, win)
+            grass(x, y, win)
             x += step
     if keys[pygame.K_UP]:
         saper=saper_up
@@ -51,6 +65,11 @@ while run:
         if check <= -60:
             pass
         else:
+            grass(x - 60, y, win)
+            grass(x + 60, y, win)
+            grass(x, y - 60, win)
+            grass(x, y + 60, win)
+            grass(x, y, win)
             y -= step
     if keys[pygame.K_DOWN]:
         saper=saper_down
@@ -59,10 +78,15 @@ while run:
         if check >= 540:
             pass
         else:
+            grass(x - 60, y, win)
+            grass(x + 60, y, win)
+            grass(x, y - 60, win)
+            grass(x, y + 60, win)
+            grass(x, y, win)
             y += step
     # "czyszczenie" ekranu
-    win.fill((0, 0, 0))
-
+    #draw_map((9,9), win)
+    #win.fill((0, 0, 0))
     saper_rect=saper.get_rect(
         center=(x + 25, y + 25)
     )
