@@ -1,63 +1,47 @@
-import os
+import enum
 import random
-import pygame
-import sys
-from PIL import Image
+from sztuczna_inteligencja.gameTools.tools import resize_image
 
+class Grid():
 
-#flags=["kamien.jpg",
- #       "grass.png"]
-#randofile = random.choice(flags)
-#photo = randofile
-#grass_count = random.randint(30, 50)
-#rock_count = 91 - grass_count
-field = []
-for i in range(9):
-    field.append(list())
-    row = field[i]
-    for cell in range(9):
-        row.append(random.randint(0,1))
-    random.shuffle(field[i])
+    #baza objektów
+    @enum.unique
+    class Objects(enum.Enum):
+        GRASS = "grass.png"
+        ROCK = "rock.jpg"
 
-random.shuffle(field)
-print(field)
+    def __init__(self, size, window):
+        self.grid_matrix = []
+        self.size = size
+        self.SCREEN_HEIGHT = window.get_height()
+        self.SCREEN_WIDTH = window.get_width()
+        self.window = window
+        self.TILE_SIZE = (self.SCREEN_WIDTH / size[0], self.SCREEN_HEIGHT / size[1])
+        self.create_grid(self.size)
 
-#zmienne globalne
-SCREEN_HEIGHT = 540
-SCREEN_WIDTH = SCREEN_HEIGHT
-MAP_SIZE = 9
-TILE_SIZE = int(SCREEN_HEIGHT / MAP_SIZE)
-x = (SCREEN_WIDTH % 2) + (SCREEN_WIDTH / 2)
-y = (SCREEN_HEIGHT % 2) + (SCREEN_HEIGHT / 2)
+    #powstanie macierzy z wylosowanymi nazwami objektów, a potem rysowanie kratki na podstawie tej macierzy
+    def create_grid(self, size):
+        matrix = []
+        for i in range(size[0]):
+            matrix.append(list())
+            row = matrix[i]
+            for j in range(size[1]):
+                row.append(random.randint(0, 1))
+            random.shuffle(matrix[i])
+        random.shuffle(matrix)
+        self.grid_matrix = matrix
+        self.draw_grid(matrix, self.window)
 
-#funkcja zmiany rozmiaru modelu zgodnie z zapotrzebowaniem
-def resize_image(input_image_path, output_image_path, size):
-    original_image = Image.open(input_image_path)
-    resized_image = original_image.resize(size)
-    resized_image.save(output_image_path)
-    photo = pygame.image.load(output_image_path)
-    #os.remove('resisedGrass.png')
-    return photo
-
-
-
-def grass(x,y, window):
-    window.blit(resize_image("grass.png", "resisedGrass.png", (60, 60)), (x, y))
-    return 0
-
-def rock(x, y, window):
-    window.blit(resize_image("kamien.jpg", "kam_resized.jpg", (60, 60)), (x, y))
-
-#inicjalizacja kratki o rozmiarach grid_size[0] x grid_size[1]
-def draw_map(grid_size, window):
-    #rysowanie wierszy
-    for i in range(len(field)):
-        #rysowanie kolumn
-        for j in range(9):
-            #print(f"col= {j}, row={i}, el_i_j={field[i][j]}")
-            if field[i][j] == 1:
-                print(f"plant grass x={i * 60}, y={j * 60}")
-                rock(i * 60, j * 60, window)
-            else:
-                print(f"plant rock x={i*60}, y={j*60}")
-                grass(i * 60, j * 60, window)
+    def draw_grid(self, grid_matrix, window):
+        # rysowanie wierszy
+        for i in range(len(grid_matrix)):
+            # rysowanie kolumn
+            for j in range(len(grid_matrix[i])):
+                #sprawdzamy wartości w macierzy i na podstawie wartości rysujemy odpowiedni object
+                if grid_matrix[i][j] == 1:
+                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.Objects.ROCK.value, (60, 60), window)
+                else:
+                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.Objects.GRASS.value, (60, 60), window)
+    #funkcja rysowania objektów
+    def create_object(self, position, object_name, object_size, window):
+        window.blit(resize_image(f"./sprites/{object_name}", f"temporaryFiles/{object_name}", object_size), position)

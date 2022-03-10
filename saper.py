@@ -1,93 +1,70 @@
 import pygame
-from kratka import draw_map
-from kratka import grass
+from sztuczna_inteligencja.gameObjects.kratka import Grid
 
 pygame.init()
 win = pygame.display.set_mode((540, 540))
 pygame.display.set_caption("Saper")
 TILE_SIZE = 60
-
 x = 0
 y = 0
 step = 60
 run = True
 clock = pygame.time.Clock()
-draw_map((9, 9), win)
+grid = Grid((15, 15), win)
 
 while run:
     pygame.time.delay(60)
-    # opóźnienie w gorze
+    # opóźnienie w grze
 
-    pygame.time.delay(60)
     for event in pygame.event.get():
+        print(event.type, pygame.K_w)
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.MOUSEMOTION:
+            print(pygame.mouse.get_pos())
     # obsługa zdarzeń
     keys = pygame.key.get_pressed()
     # warunki do zmiany pozycji obiektu
-    clock.tick(75)
-    # Keep player on the screen
-    saper_surf = saper_down = saper_up = pygame.image.load('saper.png')
-    saper_left=pygame.image.load('saper_left.png')
-    saper_right=pygame.image.load('saper_right.png')
+    #clock.tick(75)
+    # Trzymanie gracza na ekranie
+    saper_surf = saper_down = saper_up = pygame.image.load('sprites/saper.png')
+    saper_left=pygame.image.load('sprites/saper_left.png')
+    saper_right=pygame.image.load('sprites/saper_right.png')
 
     saper=saper_surf
 
-    if keys[pygame.K_LEFT]:
+    if keys [pygame.K_LEFT] and x-step > -60:
         saper=saper_left
-        check = x
-        check -= step
-        if check <= -60:
-            pass
-        else:
-            grass(x, y, win)
-            grass(x-60, y, win)
-            grass(x+60, y, win)
-            grass(x, y-60, win)
-            grass(x, y+60, win)
-            x -= step
-    if keys[pygame.K_RIGHT]:
-        saper=saper_right
-        check=x
-        check += step
-        if check >= 540:
-            pass
-        else:
-            grass(x - 60, y, win)
-            grass(x + 60, y, win)
-            grass(x, y - 60, win)
-            grass(x, y + 60, win)
-            grass(x, y, win)
-            x += step
-    if keys[pygame.K_UP]:
+
+        #odswieżanie komórek
+        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
+        grid.create_object((x, y-60), grid.Objects.GRASS.value, (60, 60), win)
+        # zmienić pozycję gracza
+        x -= step
+    if keys[pygame.K_RIGHT] and x+step < 540:
+        saper = saper_right
+
+        #odswieżanie komórek
+        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
+        grid.create_object((x, y - 60), grid.Objects.GRASS.value, (60, 60), win)
+        # zmienić pozycję gracza
+        x += step
+    if keys[pygame.K_UP] and y-step>-60:
         saper=saper_up
-        check = y
-        check -= step
-        if check <= -60:
-            pass
-        else:
-            grass(x - 60, y, win)
-            grass(x + 60, y, win)
-            grass(x, y - 60, win)
-            grass(x, y + 60, win)
-            grass(x, y, win)
-            y -= step
-    if keys[pygame.K_DOWN]:
+
+        #odswieżanie komórek
+        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
+        grid.create_object((x, y - 60), grid.Objects.GRASS.value, (60, 60), win)
+        # zmienić pozycję gracza
+        y -= step
+    if keys[pygame.K_DOWN] and y+step<540:
         saper=saper_down
-        check = y
-        check += step
-        if check >= 540:
-            pass
-        else:
-            grass(x - 60, y, win)
-            grass(x + 60, y, win)
-            grass(x, y - 60, win)
-            grass(x, y + 60, win)
-            grass(x, y, win)
-            y += step
-    # "czyszczenie" ekranu
-    #draw_map((9,9), win)
-    #win.fill((0, 0, 0))
+
+        #odswieżanie komórek
+        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
+        grid.create_object((x, y - 60), grid.Objects.GRASS.value, (60, 60), win)
+        #zmienić pozycję gracza
+        y += step
     saper_rect=saper.get_rect(
         center=(x + 25, y + 25)
     )
