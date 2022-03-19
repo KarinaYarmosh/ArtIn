@@ -7,10 +7,11 @@ class Grid():
     #baza objektów
     @enum.unique
     class Objects(enum.Enum):
-        GRASS = "grass.png"
-        ROCK = "rock.jpg"
+        GRASS = ["grass.png", 0]
+        ROCK = ["rock.jpg", 1]
 
     def __init__(self, size, window):
+        self.objects = {0: "grass.png", 1: "rock.jpg"}
         self.grid_matrix = []
         self.size = size
         self.SCREEN_HEIGHT = window.get_height()
@@ -39,9 +40,9 @@ class Grid():
             for j in range(len(grid_matrix[i])):
                 #sprawdzamy wartości w macierzy i na podstawie wartości rysujemy odpowiedni object
                 if grid_matrix[i][j] == 1:
-                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.Objects.ROCK.value, (60, 60), window)
+                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(1), (60, 60), window)
                 else:
-                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.Objects.GRASS.value, (60, 60), window)
+                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(0), (60, 60), window)
     #funkcja rysowania objektów
     def create_object(self, position, object_name, object_size, window):
         window.blit(resize_image(f"./sprites/{object_name}", f"temporaryFiles/{object_name}", object_size), position)

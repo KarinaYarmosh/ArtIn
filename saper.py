@@ -10,18 +10,15 @@ y = 0
 step = 60
 run = True
 clock = pygame.time.Clock()
-grid = Grid((15, 15), win)
+grid = Grid((9, 9), win)
 
 while run:
     pygame.time.delay(60)
     # opóźnienie w grze
 
     for event in pygame.event.get():
-        print(event.type, pygame.K_w)
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEMOTION:
-            print(pygame.mouse.get_pos())
     # obsługa zdarzeń
     keys = pygame.key.get_pressed()
     # warunki do zmiany pozycji obiektu
@@ -32,37 +29,38 @@ while run:
     saper_right=pygame.image.load('sprites/saper_right.png')
 
     saper=saper_surf
-
+    print(x,y)
     if keys [pygame.K_LEFT] and x-step > -60:
         saper=saper_left
-
         #odswieżanie komórek
-        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
-        grid.create_object((x, y-60), grid.Objects.GRASS.value, (60, 60), win)
+        grid.create_object((x, y), grid.objects.get(grid.grid_matrix[x // 60][y // 60]), (60, 60), win)
+        grid.create_object((x, y - 60), grid.objects.get(grid.grid_matrix[x // 60][(y - 60) // 60]), (60, 60), win)
         # zmienić pozycję gracza
         x -= step
     if keys[pygame.K_RIGHT] and x+step < 540:
         saper = saper_right
 
         #odswieżanie komórek
-        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
-        grid.create_object((x, y - 60), grid.Objects.GRASS.value, (60, 60), win)
+        grid.create_object((x, y), grid.objects.get(grid.grid_matrix[x // 60][y // 60]), (60, 60), win)
+        grid.create_object((x, y - 60), grid.objects.get(grid.grid_matrix[x // 60][(y - 60) // 60]), (60, 60), win)
         # zmienić pozycję gracza
         x += step
     if keys[pygame.K_UP] and y-step>-60:
         saper=saper_up
 
         #odswieżanie komórek
-        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
-        grid.create_object((x, y - 60), grid.Objects.GRASS.value, (60, 60), win)
+        grid.create_object((x, y), grid.objects.get(grid.grid_matrix[x // 60][y // 60]), (60, 60), win)
+        grid.create_object((x, y - 60), grid.objects.get(grid.grid_matrix[x // 60][(y - 60) // 60]), (60, 60), win)
         # zmienić pozycję gracza
         y -= step
     if keys[pygame.K_DOWN] and y+step<540:
         saper=saper_down
 
         #odswieżanie komórek
-        grid.create_object((x, y), grid.Objects.GRASS.value, (60, 60), win)
-        grid.create_object((x, y - 60), grid.Objects.GRASS.value, (60, 60), win)
+
+        grid.create_object((x, y), grid.objects.get(grid.grid_matrix[x//60][y//60]), (60, 60), win)
+        grid.create_object((x, y - 60), grid.objects.get(grid.grid_matrix[x//60][(y-60)//60]), (60, 60), win)
+
         #zmienić pozycję gracza
         y += step
     saper_rect=saper.get_rect(
