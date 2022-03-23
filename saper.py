@@ -20,19 +20,30 @@ granats=[]
 mines=[]
 #bombs
 
-for i in range(MINES_NUM):
+i=0
+
+while i != MINES_NUM:
     s = int(random.randrange(0, 540, 60))
     d = int(random.randrange(0, 540, 60))
     mine = [s, d]
-    mines.append(mine)
+    if mine not in mines:
+        mines.append(mine)
+        i+=1
+
 print(mines)
 
-for i in range(GRANATS_NUM):
+i=0
+
+while i != GRANATS_NUM:
     l = int(random.randrange(0, 540, 60))
     m = int(random.randrange(0, 540, 60))
     granat = [l, m]
-    granats.append(granat)
+    if (granat not in mines) and (granat not in granats):
+        granats.append(granat)
+        i+=1
+
 print(granats)
+print(mines == granats)
 
 # while gran:
 #     granat = random.randrange(2, 9 ** 2)

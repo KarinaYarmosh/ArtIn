@@ -1,4 +1,5 @@
 import enum
+import os
 import random
 from sztuczna_inteligencja.gameTools.tools import resize_image
 
@@ -46,4 +47,4 @@ class Grid():
                     self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(0), (60, 60))
     #funkcja rysowania objektów
     def create_object(self, position, object_name, object_size):
-        self.window.blit(resize_image(f"./sprites/{object_name}", f"temporaryFiles/{object_name}", object_size), position)
+        self.window.blit(resize_image(f"./sprites/{object_name}", f"./temporaryFiles/{object_name}", object_size), position)
