@@ -1,4 +1,5 @@
 import pygame
+import random
 from sztuczna_inteligencja.gameObjects.kratka import Grid
 
 pygame.init()
@@ -9,9 +10,29 @@ TILE_SIZE = 60
 x = 0
 y = 0
 step = 60
+MINES_NUM = 5
+GRANATS_NUM = 5
 run = True
+gran = True
 clock = pygame.time.Clock()
-grid = Grid((10, 10), win)
+grid = Grid((9, 9), win)
+mines=[]
+granats=[]
+
+#bombs
+mines.append(random.sample(range(2, 9 ** 2 + 1), MINES_NUM))  # 9-grid size, generujemy miny (1, 9** 2 + 1, ale nie musi być na 1!!(saper tam sie znajduje))
+
+while gran:
+    granat = random.randrange(2, 9 ** 2)
+    if granat not in mines:
+        granats.append(granat)  # 9-grid size, generujemy miny (1, 9** 2 + 1, ale nie musi być na 1!!(saper tam sie znajduje))
+        if len(granats) == GRANATS_NUM:
+            gran = False
+
+checked = set()  #na przyszlosc
+
+print(mines)
+print(granats)
 
 while run:
     pygame.time.delay(60)
@@ -30,7 +51,7 @@ while run:
     saper_right=pygame.image.load('sprites/saper_right.png')
 
     saper=saper_surf
-    print(x,y)
+    #print(x,y)
     if keys [pygame.K_LEFT] and x-step > -60:
         saper=saper_left
         #odswieżanie komórek
@@ -67,7 +88,9 @@ while run:
     saper_rect=saper.get_rect(
         center=(x + 25, y + 25)
     )
-    win.blit(saper,saper_rect)
+    win.blit(saper, saper_rect)
+
+    #if saper == mines:
 
     # odświeżenie ekranu
     pygame.display.update()
