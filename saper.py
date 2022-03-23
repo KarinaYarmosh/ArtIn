@@ -16,8 +16,8 @@ run = True
 gran = True
 clock = pygame.time.Clock()
 grid = Grid((9, 9), win)
-granats=[]
-mines=[]
+granats = []
+mines = []
 #bombs
 
 i=0
@@ -45,19 +45,6 @@ while i != GRANATS_NUM:
 print(granats)
 print(mines == granats)
 
-# while gran:
-#     granat = random.randrange(2, 9 ** 2)
-#     if granat not in mines:
-#         if granat not in granats:
-#             granats.append(granat)  # 9-grid size, generujemy miny (1, 9** 2 + 1, ale nie musi być na 1!!(saper tam sie znajduje))
-#             if len(granats) == GRANATS_NUM:
-#                 gran = False
-#
-# checked = set()  #na przyszlosc
-#
-# print(mines)
-# print(granats)
-
 while run:
     pygame.time.delay(60)
     # opóźnienie w grze
@@ -78,12 +65,19 @@ while run:
     #print(x,y)
     if keys [pygame.K_LEFT] and x-step > -60:
         saper=saper_left
-
         #odswieżanie komórek
         grid.create_object((x, y), grid.objects.get(grid.grid_matrix[x // 60][y // 60]), (60, 60))
         grid.create_object((x, y - 60), grid.objects.get(grid.grid_matrix[x // 60][(y - 60) // 60]), (60, 60))
         # zmienić pozycję gracza
         x -= step
+
+        print(x,y)
+        yes_or_nor = [x, y]
+        if yes_or_nor in mines:
+            print("MINA")
+        if yes_or_nor in granats:
+            print("GRANAT")
+
     if keys[pygame.K_RIGHT] and x+step < 540:
         saper = saper_right
 
@@ -92,6 +86,14 @@ while run:
         grid.create_object((x, y - 60), grid.objects.get(grid.grid_matrix[x // 60][(y - 60) // 60]), (60, 60))
         # zmienić pozycję gracza
         x += step
+
+        print(x,y)
+        yes_or_nor = [x, y]
+        if yes_or_nor in mines:
+            print("MINA")
+        if yes_or_nor in granats:
+            print("GRANAT")
+
     if keys[pygame.K_UP] and y-step>-60:
         saper=saper_up
 
@@ -100,6 +102,14 @@ while run:
         grid.create_object((x, y - 60), grid.objects.get(grid.grid_matrix[x // 60][(y - 60) // 60]), (60, 60))
         # zmienić pozycję gracza
         y -= step
+
+        print(x,y)
+        yes_or_nor = [x, y]
+        if yes_or_nor in mines:
+            print("MINA")
+        if yes_or_nor in granats:
+            print("GRANAT")
+
     if keys[pygame.K_DOWN] and y+step<540:
         saper=saper_down
 
@@ -110,6 +120,14 @@ while run:
 
         #zmienić pozycję gracza
         y += step
+
+        print(x,y)
+        yes_or_nor = [x, y]
+        if yes_or_nor in mines:
+            print("MINA")
+        if yes_or_nor in granats:
+            print("GRANAT")
+            
     saper_rect=saper.get_rect(
         center=(x + 25, y + 25)
     )
