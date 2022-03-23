@@ -26,7 +26,7 @@ while i != MINES_NUM:
     s = int(random.randrange(0, 540, 60))
     d = int(random.randrange(0, 540, 60))
     mine = [s, d]
-    if mine not in mines:
+    if (mine not in mines) and (mine != [0, 0]):
         mines.append(mine)
         i+=1
 
@@ -38,7 +38,7 @@ while i != GRANATS_NUM:
     l = int(random.randrange(0, 540, 60))
     m = int(random.randrange(0, 540, 60))
     granat = [l, m]
-    if (granat not in mines) and (granat not in granats):
+    if (granat not in mines) and (granat not in granats) and (granat != [0, 0]):
         granats.append(granat)
         i+=1
 
@@ -127,7 +127,7 @@ while run:
             print("MINA")
         if yes_or_nor in granats:
             print("GRANAT")
-            
+
     saper_rect=saper.get_rect(
         center=(x + 25, y + 25)
     )
