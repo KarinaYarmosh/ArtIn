@@ -25,9 +25,10 @@ mines.append(random.sample(range(2, 9 ** 2 + 1), MINES_NUM))  # 9-grid size, gen
 while gran:
     granat = random.randrange(2, 9 ** 2)
     if granat not in mines:
-        granats.append(granat)  # 9-grid size, generujemy miny (1, 9** 2 + 1, ale nie musi być na 1!!(saper tam sie znajduje))
-        if len(granats) == GRANATS_NUM:
-            gran = False
+        if granat not in granats:
+            granats.append(granat)  # 9-grid size, generujemy miny (1, 9** 2 + 1, ale nie musi być na 1!!(saper tam sie znajduje))
+            if len(granats) == GRANATS_NUM:
+                gran = False
 
 checked = set()  #na przyszlosc
 
