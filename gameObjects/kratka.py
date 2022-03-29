@@ -14,7 +14,12 @@ class Grid():
         self.SCREEN_WIDTH = window.get_width()
         self.window = window
         self.TILE_SIZE = (60, 60)#(int(self.SCREEN_WIDTH / size[0]), int(self.SCREEN_HEIGHT / size[1]))
+        self.MINES_NUM = 8
+        self.GRANATS_NUM = 8
+        self.granats = []
+        self.mines = []
         self.create_grid(self.size)
+        self.spawn_hazards()
 
 
     #powstanie macierzy z wylosowanymi nazwami objektów, a potem rysowanie kratki na podstawie tej macierzy
@@ -40,6 +45,30 @@ class Grid():
                     self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(1), self.TILE_SIZE)
                 else:
                     self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(0), self.TILE_SIZE)
+
+    def spawn_hazards(self):
+        counter=0
+        #bombs
+        while counter != self.MINES_NUM:
+            s = int(random.randrange(0, 540, 60))
+            d = int(random.randrange(0, 540, 60))
+            mine = [s, d]
+            if (mine not in self.mines) and (mine != [0, 0]):
+                self.mines.append(mine)
+                counter += 1
+        print(self.mines)
+
+        counter = 0
+        while counter != self.GRANATS_NUM:
+            l = int(random.randrange(0, 540, 60))
+            m = int(random.randrange(0, 540, 60))
+            granat = [l, m]
+            if (granat not in self.mines) and (granat not in self.granats) and (granat != [0, 0]):
+                self.granats.append(granat)
+                counter += 1
+        print(self.granats)
+        print(self.mines == self.granats)
+
     #funkcja rysowania objektów
     def create_object(self, position, object_name, object_size):
         self.window.blit(resize_image(f"./sprites/{object_name}", f"./temporaryFiles/{object_name}", object_size), position)
