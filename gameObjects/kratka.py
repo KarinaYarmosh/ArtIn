@@ -5,12 +5,6 @@ from sztuczna_inteligencja.gameTools.tools import resize_image
 
 class Grid():
 
-    #baza objektów
-    @enum.unique
-    class Objects(enum.Enum):
-        GRASS = ["grass.png", 0]
-        ROCK = ["rock.jpg", 1]
-
     def __init__(self, size, window):
         self.objects = {0: "grass.png", 1: "rock.jpg"}
         self.window = window
@@ -19,8 +13,9 @@ class Grid():
         self.SCREEN_HEIGHT = window.get_height()
         self.SCREEN_WIDTH = window.get_width()
         self.window = window
-        self.TILE_SIZE = (self.SCREEN_WIDTH / size[0], self.SCREEN_HEIGHT / size[1])
+        self.TILE_SIZE = (60, 60)#(int(self.SCREEN_WIDTH / size[0]), int(self.SCREEN_HEIGHT / size[1]))
         self.create_grid(self.size)
+
 
     #powstanie macierzy z wylosowanymi nazwami objektów, a potem rysowanie kratki na podstawie tej macierzy
     def create_grid(self, size):
@@ -42,9 +37,9 @@ class Grid():
             for j in range(len(grid_matrix[i])):
                 #sprawdzamy wartości w macierzy i na podstawie wartości rysujemy odpowiedni object
                 if grid_matrix[i][j] == 1:
-                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(1), (60, 60))
+                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(1), self.TILE_SIZE)
                 else:
-                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(0), (60, 60))
+                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(0), self.TILE_SIZE)
     #funkcja rysowania objektów
     def create_object(self, position, object_name, object_size):
         self.window.blit(resize_image(f"./sprites/{object_name}", f"./temporaryFiles/{object_name}", object_size), position)
