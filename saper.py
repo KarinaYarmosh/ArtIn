@@ -5,7 +5,7 @@ from sztuczna_inteligencja.gameObjects.kratka import Grid
 class Game():
     def __init__(self, grid_size):
         pygame.init()
-        self.win = pygame.display.set_mode((540, 540))
+        self.win = pygame.display.set_mode((grid_size[0]*60, grid_size[1]*60))
         pygame.display.set_caption("Saper")
         self.x = 0
         self.y = 0
