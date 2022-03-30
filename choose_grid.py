@@ -18,9 +18,19 @@ class ChooseGameMode():
         self.init_ui()
 
     def initialize_game(self, grid_size):
-        if (grid_size[0] * 60) > self.screen_size[0] or (grid_size[1] * 60) > self.screen_size[1]:
+        # int(grid_size_x.get())
+        # int(grid_size_y.get())
+        if str(grid_size[0]).isdigit() and str(grid_size[1]).isdigit():
+            print("True")
+        else:
+            return
+        int(grid_size[0])
+        int(grid_size[1])
+        if ((int(grid_size[0])) * 60) > self.screen_size[0] or ((int(grid_size[1])) * 60) > self.screen_size[1]:
             self.label_text.set("Grid is bigger than size of your screen")
-            return 
+            return
+        print(int(grid_size[0]))
+        print(grid_size)
         self.root.destroy()
         game = Game(grid_size).start_game()
 
@@ -41,7 +51,7 @@ class ChooseGameMode():
         grid_size_y = Entry(self.mainframe, bg='white', font=30)
         grid_size_y.place(relx=0.65, rely=0.7, relwidth=0.20, relheight=0.05)
 
-        btn = Button(self.mainframe, text='start', command=lambda: self.initialize_game((int(grid_size_x.get()), int(grid_size_y.get()))))
+        btn = Button(self.mainframe, text='start', command=lambda: self.initialize_game((grid_size_x.get(), grid_size_y.get())))
         btn.place(relx=0.35, rely=0.8, relwidth=0.3, relheight=0.05)
 
         info = Label(self.mainframe, text='SAPPER', bg='#ffb700', font=40)
