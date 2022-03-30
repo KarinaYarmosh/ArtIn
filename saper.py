@@ -32,6 +32,9 @@ class Game():
 
             self.saper.saper = self.saper.saper_stay
 
+            if (self.saper.x_pos == 0) and (self.saper.y_pos == 0):
+                self.saper.backpack.clear()
+
             if keys[pygame.K_LEFT] and self.saper.x_pos - self.saper.step > -60:
                 self.saper.move_left()
 

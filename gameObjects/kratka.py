@@ -68,6 +68,7 @@ class Grid():
                 counter += 1
         print(self.granats)
         print(self.mines == self.granats)
+        return
 
     #funkcja rysowania objektów
     def create_object(self, position, object_name, object_size):

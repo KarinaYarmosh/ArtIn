@@ -2,6 +2,7 @@ import pygame
 
 
 class Sapper():
+
     def __init__(self, grid):
         self.saper_stay = pygame.image.load('sprites/saper.png')
         self.saper_down = pygame.image.load('sprites/saper.png')
@@ -16,6 +17,30 @@ class Sapper():
         self.saper_rect = self.saper.get_rect(
             center=(self.x_pos + 25, self.y_pos + 25)
         )
+        self.backpack = []
+
+    def mines_do(self, pos):
+        print(len(self.backpack))
+        print(self.backpack)
+        if pos in self.grid.mines:
+            if len(self.backpack) <= 2:
+                self.backpack.append("mina")
+
+                self.grid.mines.remove(pos)
+
+
+            elif len(self.backpack) > 2:
+                print("nie mogę więcej unieść, składż miny w miescu dla min")
+
+        if pos in self.grid.granats:
+            if len(self.backpack) <= 2:
+
+                self.backpack.append("granat")
+                self.grid.granats.remove(pos)
+
+
+        elif len(self.backpack) > 2:
+            print("nie mogę więcej unieść, składż miny w miescu dla min")
 
     def move_left(self):
         self.saper = self.saper_left
@@ -29,11 +54,9 @@ class Sapper():
         self.x_pos -= self.step
 
         print(self.x_pos, self.y_pos)
-        yes_or_nor = [self.x_pos, self.y_pos]
-        if yes_or_nor in self.grid.mines:
-            print("MINA")
-        if yes_or_nor in self.grid.granats:
-            print("GRANAT")
+        yes_or_not = [self.x_pos, self.y_pos]
+
+        self.mines_do(yes_or_not)
 
         self.saper_rect = self.saper.get_rect(
             center=(self.x_pos + 25, self.y_pos + 25)
@@ -53,10 +76,9 @@ class Sapper():
 
         print(self.x_pos, self.y_pos)
         yes_or_nor = [self.x_pos, self.y_pos]
-        if yes_or_nor in self.grid.mines:
-            print("MINA")
-        if yes_or_nor in self.grid.granats:
-            print("GRANAT")
+
+        self.mines_do(yes_or_nor)
+
         self.saper_rect = self.saper.get_rect(
             center=(self.x_pos + 25, self.y_pos + 25)
         )
@@ -75,10 +97,9 @@ class Sapper():
 
         print(self.x_pos, self.y_pos)
         yes_or_nor = [self.x_pos, self.y_pos]
-        if yes_or_nor in self.grid.mines:
-            print("MINA")
-        if yes_or_nor in self.grid.granats:
-            print("GRANAT")
+
+        self.mines_do(yes_or_nor)
+
         self.saper_rect = self.saper.get_rect(
             center=(self.x_pos + 25, self.y_pos + 25)
         )
@@ -97,10 +118,8 @@ class Sapper():
 
         print(self.x_pos, self.y_pos)
         yes_or_nor = [self.x_pos, self.y_pos]
-        if yes_or_nor in self.grid.mines:
-            print("MINA")
-        if yes_or_nor in self.grid.granats:
-            print("GRANAT")
+
+        self.mines_do(yes_or_nor)
 
         self.saper_rect = self.saper.get_rect(
             center=(self.x_pos + 25, self.y_pos + 25)

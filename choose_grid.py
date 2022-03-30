@@ -17,7 +17,7 @@ class ChooseGameMode():
         self.label.place(relx=0.15, rely=0.63, relwidth=0.7, relheight=0.05)
         self.init_ui()
 
-    def start_game(self, grid_size):
+    def initialize_game(self, grid_size):
         if (grid_size[0] * 60) > self.screen_size[0] or (grid_size[1] * 60) > self.screen_size[1]:
             self.label_text.set("Grid is bigger than size of your screen")
             return 
@@ -26,13 +26,13 @@ class ChooseGameMode():
 
     def init_ui(self):
 
-        btn1 = Button(self.mainframe, text='9x9', command=lambda: self.start_game((9,9)))
+        btn1 = Button(self.mainframe, text='9x9', command=lambda: self.initialize_game((9, 9)))
         btn1.place(relx=0.3, rely=0.1, relwidth=0.4, relheight=0.1)
 
-        btn2 = Button(self.mainframe, text='11x11', command=lambda: self.start_game((11,11)))
+        btn2 = Button(self.mainframe, text='11x11', command=lambda: self.initialize_game((11, 11)))
         btn2.place(relx=0.3, rely=0.3, relwidth=0.4, relheight=0.1)
 
-        btn3 = Button(self.mainframe, text='13x13', command=lambda: self.start_game((13,13)))
+        btn3 = Button(self.mainframe, text='13x13', command=lambda: self.initialize_game((13, 13)))
         btn3.place(relx=0.3, rely=0.5, relwidth=0.4, relheight=0.1)
 
         grid_size_x = Entry(self.mainframe, bg='white', font=30)
@@ -41,7 +41,7 @@ class ChooseGameMode():
         grid_size_y = Entry(self.mainframe, bg='white', font=30)
         grid_size_y.place(relx=0.65, rely=0.7, relwidth=0.20, relheight=0.05)
 
-        btn = Button(self.mainframe, text='start', command=lambda: self.start_game((int(grid_size_x.get()),int(grid_size_y.get())) ) )
+        btn = Button(self.mainframe, text='start', command=lambda: self.initialize_game((int(grid_size_x.get()), int(grid_size_y.get()))))
         btn.place(relx=0.35, rely=0.8, relwidth=0.3, relheight=0.05)
 
         info = Label(self.mainframe, text='SAPPER', bg='#ffb700', font=40)
