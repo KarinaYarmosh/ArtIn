@@ -22,21 +22,21 @@ class Sapper():
     def mines_do(self, pos):
         print(len(self.backpack))
         print(self.backpack)
-        if pos in self.grid.mines:
+        if pos in self.grid.mines.keys():
             if len(self.backpack) <= 2:
                 self.backpack.append("mina")
-
-                self.grid.mines.remove(pos)
+                print(self.grid.mines[pos].old_or_not)
+                self.grid.mines.pop(pos)
 
 
             elif len(self.backpack) > 2:
                 print("nie mogę więcej unieść, składż miny w miescu dla min")
 
-        if pos in self.grid.granats:
+        if pos in self.grid.granats.keys():
             if len(self.backpack) <= 2:
 
                 self.backpack.append("granat")
-                self.grid.granats.remove(pos)
+                self.grid.granats.pop(pos)
 
 
         elif len(self.backpack) > 2:
@@ -54,7 +54,7 @@ class Sapper():
         self.x_pos -= self.step
 
         print(self.x_pos, self.y_pos)
-        yes_or_not = [self.x_pos, self.y_pos]
+        yes_or_not = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_not)
 
@@ -75,7 +75,7 @@ class Sapper():
         self.x_pos += self.step
 
         print(self.x_pos, self.y_pos)
-        yes_or_nor = [self.x_pos, self.y_pos]
+        yes_or_nor = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_nor)
 
@@ -96,7 +96,7 @@ class Sapper():
         self.y_pos -= self.step
 
         print(self.x_pos, self.y_pos)
-        yes_or_nor = [self.x_pos, self.y_pos]
+        yes_or_nor = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_nor)
 
@@ -117,7 +117,7 @@ class Sapper():
         self.y_pos += self.step
 
         print(self.x_pos, self.y_pos)
-        yes_or_nor = [self.x_pos, self.y_pos]
+        yes_or_nor = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_nor)
 

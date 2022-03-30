@@ -1,6 +1,8 @@
 import enum
 import os
 import random
+
+from sztuczna_inteligencja.gameObjects.bomby import Mine, Granade
 from sztuczna_inteligencja.gameTools.tools import resize_image
 
 class Grid():
@@ -16,8 +18,8 @@ class Grid():
         self.TILE_SIZE = (60, 60)#(int(self.SCREEN_WIDTH / size[0]), int(self.SCREEN_HEIGHT / size[1]))
         self.MINES_NUM = size[0]-1 #9krat - 8 mines; 11krat - 10 mines; 13krat - 12 mines
         self.GRANATS_NUM = size[0]-1
-        self.granats = []
-        self.mines = []
+        self.granats = {}
+        self.mines = {}
         self.create_grid(self.size)
         self.spawn_hazards()
 
@@ -51,21 +53,22 @@ class Grid():
         counter=0
         #bombs
         while counter != self.MINES_NUM:
-            s = int(random.randrange(0, 540, 60))
-            d = int(random.randrange(0, 540, 60))
-            mine = [s, d]
-            if (mine not in self.mines) and (mine != [0, 0]):
-                self.mines.append(mine)
+            s = int(random.randrange(0, self.SCREEN_HEIGHT, 60))
+            d = int(random.randrange(0, self.SCREEN_WIDTH, 60))
+            mine_pos = (s, d)
+            if (mine_pos not in self.mines.keys()) and (mine_pos != [0, 0]):
+                self.mines[mine_pos] = Mine(mine_pos)
                 counter += 1
         print(self.mines)
 
         counter = 0
         while counter != self.GRANATS_NUM:
-            l = int(random.randrange(0, 540, 60))
-            m = int(random.randrange(0, 540, 60))
-            granat = [l, m]
-            if (granat not in self.mines) and (granat not in self.granats) and (granat != [0, 0]):
-                self.granats.append(granat)
+            l = int(random.randrange(0, self.SCREEN_HEIGHT, 60))
+            m = int(random.randrange(0, self.SCREEN_WIDTH, 60))
+            granat_pos = (l, m)
+            if (granat_pos not in self.mines.keys()) and (granat_pos not in self.granats.keys()) and (granat_pos != [0, 0]):
+                self.granats[granat_pos] = Granade(granat_pos)
+                print(self.granats)
                 counter += 1
         print(self.granats)
         print(self.mines == self.granats)
