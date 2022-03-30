@@ -14,8 +14,8 @@ class Grid():
         self.SCREEN_WIDTH = window.get_width()
         self.window = window
         self.TILE_SIZE = (60, 60)#(int(self.SCREEN_WIDTH / size[0]), int(self.SCREEN_HEIGHT / size[1]))
-        self.MINES_NUM = 8
-        self.GRANATS_NUM = 8
+        self.MINES_NUM = size[0]-1 #9krat - 8 mines; 11krat - 10 mines; 13krat - 12 mines
+        self.GRANATS_NUM = size[0]-1
         self.granats = []
         self.mines = []
         self.create_grid(self.size)
@@ -24,6 +24,7 @@ class Grid():
 
     #powstanie macierzy z wylosowanymi nazwami objektów, a potem rysowanie kratki na podstawie tej macierzy
     def create_grid(self, size):
+        #print(size[0])
         matrix = []
         for i in range(size[0]):
             matrix.append(list())
