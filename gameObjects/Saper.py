@@ -32,7 +32,7 @@ class Sapper():
 
 
             else:
-                print("nie mogę więcej unieść, składż miny w miescu dla min (pozycja 0, 0)")
+                print("nie mogę więcej unieść, bo to jest mina, składż bomby w miescu dla bomb (pozycja 0, 0)")
 
         if pos in self.grid.granats.keys():
             if self.backpack_load + self.grid.granats[pos].weight <= 3:
@@ -41,7 +41,7 @@ class Sapper():
                 self.backpack_load += self.grid.granats[pos].weight
                 self.grid.granats.pop(pos)
             else:
-                print("nie mogę więcej unieść, składż miny w miescu dla min (pozycja 0, 0)")
+                print("nie mogę więcej unieść, bo to jest granat, składż bomby w miescu dla bomb (pozycja 0, 0)")
 
     def move_left(self):
         self.saper = self.saper_left
