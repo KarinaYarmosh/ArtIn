@@ -30,10 +30,14 @@ class Game():
 
             # print(x,y)
 
+
             self.saper.saper = self.saper.saper_stay
 
             if (self.saper.x_pos == 0) and (self.saper.y_pos == 0):
                 self.saper.backpack.clear()
+                self.saper.backpack_load = 0
+
+            #print(f"pozycja gracza: x - {self.saper.x_pos}, y - {self.saper.y_pos}")
 
             if keys[pygame.K_LEFT] and self.saper.x_pos - self.saper.step > -60:
                 self.saper.move_left()
@@ -47,6 +51,9 @@ class Game():
             if keys[pygame.K_DOWN] and self.saper.y_pos + self.saper.step < self.win.get_height():
                 self.saper.move_down()
 
+            if not self.grid.mines and not self.grid.granats:
+                print("You win!")
+                self.run = False
 
             self.win.blit(self.saper.saper, self.saper.saper_rect)
 

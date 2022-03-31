@@ -18,29 +18,30 @@ class Sapper():
             center=(self.x_pos + 25, self.y_pos + 25)
         )
         self.backpack = []
+        self.backpack_load = 0
 
     def mines_do(self, pos):
-        print(len(self.backpack))
-        print(self.backpack)
+        #print(len(self.backpack))
+        print(f"Backpack: {self.backpack}")
         if pos in self.grid.mines.keys():
-            if len(self.backpack) <= 2:
+            if self.backpack_load + self.grid.mines[pos].weight <= 3:
                 self.backpack.append("mina")
-                print(self.grid.mines[pos].old_or_not)
+                self.backpack_load += self.grid.mines[pos].weight
+                #print(self.grid.mines[pos].old_or_not)
                 self.grid.mines.pop(pos)
 
 
-            elif len(self.backpack) > 2:
-                print("nie mogę więcej unieść, składż miny w miescu dla min")
+            else:
+                print("nie mogę więcej unieść, składż miny w miescu dla min (pozycja 0, 0)")
 
         if pos in self.grid.granats.keys():
-            if len(self.backpack) <= 2:
+            if self.backpack_load + self.grid.granats[pos].weight <= 3:
 
                 self.backpack.append("granat")
+                self.backpack_load += self.grid.granats[pos].weight
                 self.grid.granats.pop(pos)
-
-
-        elif len(self.backpack) > 2:
-            print("nie mogę więcej unieść, składż miny w miescu dla min")
+            else:
+                print("nie mogę więcej unieść, składż miny w miescu dla min (pozycja 0, 0)")
 
     def move_left(self):
         self.saper = self.saper_left
@@ -53,7 +54,7 @@ class Sapper():
         # zmienić pozycję gracza
         self.x_pos -= self.step
 
-        print(self.x_pos, self.y_pos)
+        #print("self.x_pos, self.y_pos")
         yes_or_not = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_not)
@@ -74,7 +75,7 @@ class Sapper():
         # zmienić pozycję gracza
         self.x_pos += self.step
 
-        print(self.x_pos, self.y_pos)
+        #print(self.x_pos, self.y_pos)
         yes_or_nor = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_nor)
@@ -95,7 +96,7 @@ class Sapper():
         # zmienić pozycję gracza
         self.y_pos -= self.step
 
-        print(self.x_pos, self.y_pos)
+        #print(self.x_pos, self.y_pos)
         yes_or_nor = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_nor)
@@ -116,7 +117,7 @@ class Sapper():
         # zmienić pozycję gracza
         self.y_pos += self.step
 
-        print(self.x_pos, self.y_pos)
+        #print(self.x_pos, self.y_pos)
         yes_or_nor = (self.x_pos, self.y_pos)
 
         self.mines_do(yes_or_nor)

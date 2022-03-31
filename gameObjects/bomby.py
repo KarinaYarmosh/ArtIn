@@ -39,6 +39,3 @@ class Granade(Bomb):
     def bomb_type(self):
         return "granade"
 
-mine = Mine(10)
-print(mine.bomb_type())
-

@@ -44,10 +44,9 @@ class Grid():
             # rysowanie kolumn
             for j in range(len(grid_matrix[i])):
                 #sprawdzamy wartości w macierzy i na podstawie wartości rysujemy odpowiedni object
-                if grid_matrix[i][j] == 1:
-                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(1), self.TILE_SIZE)
-                else:
-                    self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(0), self.TILE_SIZE)
+
+                self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(self.grid_matrix[i][j]), self.TILE_SIZE)
+
 
     def spawn_hazards(self):
         counter=0
@@ -58,8 +57,10 @@ class Grid():
             mine_pos = (s, d)
             if (mine_pos not in self.mines.keys()) and (mine_pos != [0, 0]):
                 self.mines[mine_pos] = Mine(mine_pos)
+                self.grid_matrix[s//60][d//60] = 0
+                self.create_object(mine_pos, self.objects.get(0), self.TILE_SIZE)
                 counter += 1
-        print(self.mines)
+        #print(self.mines)
 
         counter = 0
         while counter != self.GRANATS_NUM:
@@ -68,10 +69,10 @@ class Grid():
             granat_pos = (l, m)
             if (granat_pos not in self.mines.keys()) and (granat_pos not in self.granats.keys()) and (granat_pos != [0, 0]):
                 self.granats[granat_pos] = Granade(granat_pos)
-                print(self.granats)
+                #print(self.granats)
                 counter += 1
-        print(self.granats)
-        print(self.mines == self.granats)
+        #print(self.granats)
+        #print(self.mines == self.granats)
         return
 
     #funkcja rysowania objektów
