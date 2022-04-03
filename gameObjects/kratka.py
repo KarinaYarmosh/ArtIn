@@ -32,12 +32,20 @@ class Grid():
             matrix.append(list())
             row = matrix[i]
             for j in range(size[1]):
-                if i==0 and j==0:
+                if (i==0 and j==0) or (i==0 and j==1) or (i==1 and j==0):
                     row.append(random.randrange(0, 2))
                 else:
                     row.append(random.randrange(0, 3))
             #random.shuffle(matrix[i])
         #random.shuffle(matrix)
+        print(matrix)
+        for i in range(len(matrix)):
+            #print(f"i={i} matrix={matrix[i]}")
+            for j in range(len(matrix[i])):
+                print(f"i={i} j={j} matrix={matrix[i][j]}")
+                if matrix[i][j] == 2 and (matrix[i][j-1]==2 or matrix[i-1][j-1]==2 or matrix[i-1][j]==2 or matrix[i][j-1]==2):
+                    matrix[i][j] = random.randrange(0, 2)
+        print(matrix)
         self.grid_matrix = matrix
         self.draw_grid(matrix, self.window)
         print(self.grid_matrix)
