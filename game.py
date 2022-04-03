@@ -1,8 +1,12 @@
+import os
+
 import pygame
 import random
 
 from sztuczna_inteligencja.gameObjects.Saper import Sapper
 from sztuczna_inteligencja.gameObjects.kratka import Grid
+from sztuczna_inteligencja.gameTools.tools import resize_image
+
 
 class Game():
     def __init__(self, grid_size):
@@ -48,7 +52,8 @@ class Game():
 
             if not self.grid.mines and not self.grid.granats and not self.saper.backpack:
                 print("You win!")
-                self.run = False
+                self.grid.create_object((0,0), "win.jpg", (540, 540))
+                #self.run = False
 
             self.win.blit(self.saper.saper, self.saper.saper_rect)
 
