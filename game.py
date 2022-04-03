@@ -17,7 +17,7 @@ class Game():
     def start_game(self):
         while self.run:
             # opóźnienie w grze
-            pygame.time.delay(60)
+            pygame.time.delay(120)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -25,11 +25,6 @@ class Game():
 
             # obsługa zdarzeń
             keys = pygame.key.get_pressed()
-            # warunki do zmiany pozycji obiektu
-            # Trzymanie gracza na ekranie
-
-            # print(x,y)
-
 
             self.saper.saper = self.saper.saper_stay
 
@@ -39,7 +34,7 @@ class Game():
 
             #print(f"pozycja gracza: x - {self.saper.x_pos}, y - {self.saper.y_pos}")
 
-            if keys[pygame.K_LEFT] and self.saper.x_pos - self.saper.step > -60:
+            if keys[pygame.K_LEFT] and self.saper.x_pos - self.saper.step > -60 and self.grid.grid_matrix[self.saper.x_pos - self.saper.step][self.saper.y_pos] != 2:
                 self.saper.move_left()
 
             if keys[pygame.K_RIGHT] and self.saper.x_pos + self.saper.step < self.win.get_width():
@@ -51,13 +46,11 @@ class Game():
             if keys[pygame.K_DOWN] and self.saper.y_pos + self.saper.step < self.win.get_height():
                 self.saper.move_down()
 
-            if not self.grid.mines and not self.grid.granats:
+            if not self.grid.mines and not self.grid.granats and not self.saper.backpack:
                 print("You win!")
                 self.run = False
 
             self.win.blit(self.saper.saper, self.saper.saper_rect)
-
-            # if saper == mines:
 
             # odświeżenie ekranu
             pygame.display.update()

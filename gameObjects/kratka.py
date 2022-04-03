@@ -8,7 +8,7 @@ from sztuczna_inteligencja.gameTools.tools import resize_image
 class Grid():
 
     def __init__(self, size, window):
-        self.objects = {0: "grass.png", 1: "rock.jpg"}
+        self.objects = {0: "grass.png", 1: "rock.jpg", 2:"duzykamien.jpg"}
         self.window = window
         self.grid_matrix = []
         self.size = size
@@ -32,11 +32,16 @@ class Grid():
             matrix.append(list())
             row = matrix[i]
             for j in range(size[1]):
-                row.append(random.randint(0, 1))
-            random.shuffle(matrix[i])
-        random.shuffle(matrix)
+                if i==0 and j==0:
+                    row.append(random.randrange(0, 2))
+                else:
+                    row.append(random.randrange(0, 3))
+            #random.shuffle(matrix[i])
+        #random.shuffle(matrix)
         self.grid_matrix = matrix
         self.draw_grid(matrix, self.window)
+        print(self.grid_matrix)
+        print(self.grid_matrix[1][2])
 
     def draw_grid(self, grid_matrix, window):
         # rysowanie wierszy
@@ -47,7 +52,6 @@ class Grid():
 
                 self.create_object((i * self.TILE_SIZE[0], j * self.TILE_SIZE[1]), self.objects.get(self.grid_matrix[i][j]), self.TILE_SIZE)
 
-
     def spawn_hazards(self):
         counter=0
         #bombs
@@ -55,7 +59,8 @@ class Grid():
             s = int(random.randrange(0, self.SCREEN_HEIGHT, 60))
             d = int(random.randrange(0, self.SCREEN_WIDTH, 60))
             mine_pos = (s, d)
-            if (mine_pos not in self.mines.keys()) and (mine_pos != [0, 0]):
+            #print(self.grid_matrix[s//60][d//60])
+            if (mine_pos not in self.mines.keys()) and (mine_pos != [0, 0]) and (self.grid_matrix[s//60][d//60] == 0):
                 self.mines[mine_pos] = Mine(mine_pos)
                 self.grid_matrix[s//60][d//60] = 0
                 self.create_object(mine_pos, self.objects.get(0), self.TILE_SIZE)
@@ -67,7 +72,7 @@ class Grid():
             l = int(random.randrange(0, self.SCREEN_HEIGHT, 60))
             m = int(random.randrange(0, self.SCREEN_WIDTH, 60))
             granat_pos = (l, m)
-            if (granat_pos not in self.mines.keys()) and (granat_pos not in self.granats.keys()) and (granat_pos != [0, 0]):
+            if (granat_pos not in self.mines.keys()) and (granat_pos not in self.granats.keys()) and (granat_pos != [0, 0]) and (self.grid_matrix[l//60][m//60] == 0 or self.grid_matrix[l//60][m//60] == 1):
                 self.granats[granat_pos] = Granade(granat_pos)
                 #print(self.granats)
                 counter += 1

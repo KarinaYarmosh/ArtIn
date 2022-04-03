@@ -1,6 +1,6 @@
 from tkinter import *
 
-from sztuczna_inteligencja.saper import Game
+from sztuczna_inteligencja.game import Game
 
 
 class ChooseGameMode():
@@ -18,8 +18,6 @@ class ChooseGameMode():
         self.init_ui()
 
     def initialize_game(self, grid_size):
-        # int(grid_size_x.get())
-        # int(grid_size_y.get())
         try:
             grid_size[0] = int(grid_size[0])
             grid_size[1] = int(grid_size[1])

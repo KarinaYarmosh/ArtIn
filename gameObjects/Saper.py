@@ -1,6 +1,5 @@
 import pygame
 
-
 class Sapper():
 
     def __init__(self, grid):
