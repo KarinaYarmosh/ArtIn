@@ -1,6 +1,7 @@
 from abc import ABC as abstract, abstractmethod
 from random import randint
 
+
 class Bomb(abstract):
 
     @abstractmethod
@@ -15,6 +16,7 @@ class Bomb(abstract):
     def bomb_type(self):
         pass
 
+
 class Mine(Bomb):
 
     def __init__(self, location):
@@ -27,6 +29,7 @@ class Mine(Bomb):
     def bomb_type(self):
         return "mine"
 
+
 class Granade(Bomb):
 
     def __init__(self, location):
@@ -38,4 +41,3 @@ class Granade(Bomb):
 
     def bomb_type(self):
         return "granade"
-
