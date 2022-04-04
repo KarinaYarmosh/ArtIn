@@ -139,7 +139,8 @@ class Sapper:
         start = [0, 0]
         x_end = end[0]
         y_end = end[1]
-        limit = list(range(9))
+        limit = list(range(len(matrix)))
+        print(limit)
         # for row in matrix:
         #     print(' '.join([str(elem) for elem in row]))
         frontier = SimpleQueue()
@@ -168,22 +169,22 @@ class Sapper:
         y = y_end
         moves = []
         while counter != 1:
-            if matrix[x][y] - matrix[x + 1][y] == 1:
+            if (x + 1 in limit) and matrix[x][y] - matrix[x + 1][y] == 1:
                 moves.append(1)
                 counter -= 1
                 x = x + 1
                 continue
-            if matrix[x][y] - matrix[x][y + 1] == 1:
+            if (y + 1 in limit) and matrix[x][y] - matrix[x][y + 1] == 1:
                 moves.append(4)
                 counter -= 1
                 y = y + 1
                 continue
-            if matrix[x][y] - matrix[x - 1][y] == 1:
+            if (x - 1 in limit) and matrix[x][y] - matrix[x - 1][y] == 1:
                 moves.append(3)
                 counter -= 1
                 x = x - 1
                 continue
-            if matrix[x][y] - matrix[x][y - 1] == 1:
+            if (y - 1 in limit) and matrix[x][y] - matrix[x][y - 1] == 1:
                 moves.append(2)
                 counter -= 1
                 y = y - 1

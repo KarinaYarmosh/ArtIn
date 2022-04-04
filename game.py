@@ -35,7 +35,7 @@ class Game():
 
             # Sapper moves according to the BFS-algorithm
             if not self.has_path and not self.saper.path:
-                self.saper.find_path(copy.deepcopy(self.grid.grid_matrix), [3, 0])
+                self.saper.find_path(copy.deepcopy(self.grid.grid_matrix), [12, 12])
                 print(self.saper.path)
                 self.has_path = True
             if self.saper.path:
