@@ -1,3 +1,4 @@
+#Przyszly agent
 import queue
 
 def createMaze2():
