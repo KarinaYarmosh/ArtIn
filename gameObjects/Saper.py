@@ -129,6 +129,8 @@ class Sapper:
         )
 
     def find_path(self, matrix, end):
+        weight_matrix = [[0] * len(matrix) for i in range(len(matrix))]
+        weight_matrix[0][0] = 1
         for i in range(len(matrix)):
             for j in range(len(matrix[i])):
                 if matrix[i][j] == 1:
@@ -136,31 +138,53 @@ class Sapper:
                 elif matrix[i][j] == 2:
                     matrix[i][j] = -1
         matrix[0][0] = 1
-        start = [0, 0]
+        start = [0, 0, 0, 0]
         x_end = end[0]
         y_end = end[1]
         limit = list(range(len(matrix)))
-        print(limit)
-        # for row in matrix:
-        #     print(' '.join([str(elem) for elem in row]))
+        # print(limit)
+        # for row in range(len(matrix)):
+        #     for column in range(len(matrix[row])):
+        #         print(f'{matrix[row][column]:{2}}', end=' ')
+        #     print()
         frontier = SimpleQueue()
         frontier.put(start)
         while not frontier.empty() and matrix[x_end][y_end] == 0:
             current = frontier.get()
             x = current[0]
             y = current[1]
-            if (x + 1 in limit) and matrix[x + 1][y] == 0:
+            direct = current[2]
+            number_of_turns = current[3]
+            # print("Where I")
+            # print(x, y, direct, number_of_turns)
+            if number_of_turns <= 2:
+                frontier.put([x, y, (direct+1) % 4, number_of_turns+1])
+            if (x + 1 in limit) and matrix[x + 1][y] == 0 and direct == 0 and number_of_turns <= 3:
                 matrix[x + 1][y] = matrix[x][y] + 1
-                frontier.put([x + 1, y])
-            if (y + 1 in limit) and matrix[x][y + 1] == 0:
+                weight_matrix[x + 1][y] = weight_matrix[x][y] + number_of_turns + 1
+                frontier.put([x + 1, y, 0, 0])
+            if (y + 1 in limit) and matrix[x][y + 1] == 0 and direct == 1 and number_of_turns <= 3:
                 matrix[x][y + 1] = matrix[x][y] + 1
-                frontier.put([x, y + 1])
-            if (x - 1 in limit) and matrix[x - 1][y] == 0:
+                weight_matrix[x][y + 1] = weight_matrix[x][y] + number_of_turns + 1
+                frontier.put([x, y + 1, 1, 0])
+            if (x - 1 in limit) and matrix[x - 1][y] == 0 and direct == 2 and number_of_turns <= 3:
+                weight_matrix[x - 1][y] = weight_matrix[x][y] + number_of_turns + 1
                 matrix[x - 1][y] = matrix[x][y] + 1
-                frontier.put([x - 1, y])
-            if (y - 1 in limit) and matrix[x][y - 1] == 0:
+                frontier.put([x - 1, y, 2, 0])
+            if (y - 1 in limit) and matrix[x][y - 1] == 0 and direct == 3 and number_of_turns <= 3:
+                weight_matrix[x][y - 1] = weight_matrix[x][y] + number_of_turns + 1
                 matrix[x][y - 1] = matrix[x][y] + 1
-                frontier.put([x, y - 1])
+                frontier.put([x, y - 1, 3, 0])
+            # print("Path")
+            # for row in range(len(matrix)):
+            #     for column in range(len(matrix[row])):
+            #         print(f'{matrix[row][column]:{2}}', end=' ')
+            #     print()
+            # print("Weight")
+            # for row in range(len(matrix)):
+            #     for column in range(len(matrix[row])):
+            #         print(f'{weight_matrix[row][column]:{2}}', end=' ')
+            #     print()
         # print('\n')
         # for row in matrix:
         #     print(' '.join([str(elem) for elem in row]))
