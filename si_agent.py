@@ -8,14 +8,14 @@ def createMaze2():
     maze3.append([1, 1, 0, 1, 0, 0])
     maze3.append([1, 2, 0, 1, 1, 0])
     maze3.append([1, 1, 0, 1, 0, 0])
-    print(maze3)
+
 
     for i in range(len(maze3)):
         # print(f"i={i} matrix={matrix[i]}")
         for j in range(len(maze3[i])):
             if maze3[i][j] == maze3[0][0]:
                 maze3[i][j] = "O"
-            elif i==3 and j==3:
+            elif i==4 and j==0:
                 maze3[i][j] = "X"
             elif maze3[i][j] == 2:
                 maze3[i][j] = "2"
@@ -23,7 +23,7 @@ def createMaze2():
                 maze3[i][j] = "1"
             elif maze3[i][j] == 0:
                 maze3[i][j] = "0"
-
+    print(maze3)
     return maze3
 
 
@@ -59,7 +59,9 @@ def printMaze(maze, path=""):
 
 
 def valid(maze, moves):
+
     for x, pos in enumerate(maze[0]):
+        #print(pos)
         if pos == "O":
             start = x
 
@@ -85,8 +87,13 @@ def valid(maze, moves):
 
     return True
 
+states = {"L": {"LEFT": ["MOVE"], "RIGHT": ["LEFT", "LEFT", "MOVE"], "UP": ["LMOVE"], "DOWN": ["RMOVE"]},
+          "R": {"LEFT": ["RIGHT", "RIGHT", "MOVE"] , "RIGHT": ["MOVE"], "UP": ["RMOVE"], "DOWN": ["LMOVE"]},
+          "U": {"LEFT": ["RMOVE"], "RIGHT": ["LMOVE"], "UP": ["MOVE"], "DOWN": ["RIGHT", "RIGHT", "MOVE"]},
+          "D": {"LEFT": ["LMOVE"], "RIGHT": ["RMOVE"], "UP": ["RIGHT", "RIGHT", "MOVE"], "DOWN": ["MOVE"]}}
 
-def findEnd(maze, moves):
+def findEnd(maze, moves, state):
+    steps = []
     for x, pos in enumerate(maze[0]):
         if pos == "O":
             start = x
@@ -95,20 +102,29 @@ def findEnd(maze, moves):
     j = 0
     for move in moves:
         if move == "L":
+            steps.extend(states.get("L").get(state))
+            state = "LEFT"
             i -= 1
 
         elif move == "R":
+            steps.extend(states.get("R").get(state))
+            state = "RIGHT"
             i += 1
 
         elif move == "U":
+            steps.extend(states.get("U").get(state))
+            state = "UP"
             j -= 1
 
         elif move == "D":
+            steps.extend(states.get("D").get(state))
+            state = "DOWN"
             j += 1
 
     if maze[j][i] == "X":
         print("Found: " + moves)
         printMaze(maze, moves)
+        print(steps)
         return True
 
     return False
@@ -121,45 +137,13 @@ nums.put("")
 add = ""
 maze = createMaze2()
 
-maze0 = []
-maze0.append(["#", "#", "#", "#", "#", "O", "#", "#", "#"])
-maze0.append(["#", " ", " ", " ", " ", " ", " ", " ", "#"])
-maze0.append(["#", " ", "#", "#", " ", "#", "#", " ", "#"])
-maze0.append(["#", " ", "#", " ", " ", " ", "#", " ", "#"])
-maze0.append(["#", " ", "#", " ", "#", " ", "#", " ", "#"])
-maze0.append(["#", " ", "#", " ", "#", " ", "#", " ", "#"])
-maze0.append(["#", " ", "#", " ", "#", " ", "#", "#", "#"])
-maze0.append(["#", " ", " ", " ", " ", " ", " ", " ", "#"])
-maze0.append(["#", "#", "#", "#", "#", "#", "#", "X", "#"])
-print(maze0)
-
-maze3 = []
-maze3.append([1, 1, 0, 1, 2, 0])
-maze3.append([1, 2, 0, 1, 0, 0])
-maze3.append([1, 1, 0, 1, 0, 0])
-maze3.append([1, 2, 0, 1, 1, 0])
-maze3.append([1, 1, 0, 1, 0, 0])
-print(maze3)
-
-for i in range(len(maze3)):
-    # print(f"i={i} matrix={matrix[i]}")
-    for j in range(len(maze3[i])):
-        if maze3[i][j]==maze3[0][0]:
-            maze3[i][j] = "O"
-        elif maze3[i][j] == maze3[4][4]:
-            maze3[i][j] = "X"
-        elif maze3[i][j] == 2:
-            maze3[i][j] = "2"
-        elif maze3[i][j] == 1:
-            maze3[i][j] = "1"
-        elif maze3[i][j] == 0:
-            maze3[i][j] = "0"
-print(maze3)
-
-while not findEnd(maze, add):
+state = "UP"
+while not findEnd(maze, add, state):
     add = nums.get()
-    # print(add)
+    #print(add)
     for j in ["L", "R", "U", "D"]:
         put = add + j
         if valid(maze, put):
             nums.put(put)
+
+print(nums.get())
