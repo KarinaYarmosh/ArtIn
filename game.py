@@ -3,9 +3,9 @@ import os
 import pygame
 import random
 
-from sztuczna_inteligencja.gameObjects.Saper import Sapper
-from sztuczna_inteligencja.gameObjects.kratka import Grid
-from sztuczna_inteligencja.gameTools.tools import resize_image
+from Sztuczna.gameObjects.Saper import Sapper
+from Sztuczna.gameObjects.kratka import Grid
+from Sztuczna.gameTools.tools import resize_image
 
 
 class Game():

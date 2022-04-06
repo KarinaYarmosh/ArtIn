@@ -2,8 +2,8 @@ import enum
 import os
 import random
 
-from sztuczna_inteligencja.gameObjects.bomby import Mine, Granade
-from sztuczna_inteligencja.gameTools.tools import resize_image
+from Sztuczna.gameObjects.bomby import Mine, Granade
+from Sztuczna.gameTools.tools import resize_image
 
 class Grid():
 

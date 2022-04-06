@@ -87,10 +87,10 @@ def valid(maze, moves):
 
     return True
 
-states = {"L": {"LEFT": ["MOVE"], "RIGHT": ["LEFT", "LEFT", "MOVE"], "UP": ["LMOVE"], "DOWN": ["RMOVE"]},
-          "R": {"LEFT": ["RIGHT", "RIGHT", "MOVE"] , "RIGHT": ["MOVE"], "UP": ["RMOVE"], "DOWN": ["LMOVE"]},
-          "U": {"LEFT": ["RMOVE"], "RIGHT": ["LMOVE"], "UP": ["MOVE"], "DOWN": ["RIGHT", "RIGHT", "MOVE"]},
-          "D": {"LEFT": ["LMOVE"], "RIGHT": ["RMOVE"], "UP": ["RIGHT", "RIGHT", "MOVE"], "DOWN": ["MOVE"]}}
+states = {"L": {"LEFT": ["MOVE"], "RIGHT": ["LEFT", "LEFT", "MOVE"], "UP": ["LEFT", "MOVE"], "DOWN": ["RIGHT", "MOVE"]},
+          "R": {"LEFT": ["RIGHT", "RIGHT", "MOVE"] , "RIGHT": ["MOVE"], "UP": ["RIGHT", "MOVE"], "DOWN": ["LEFT", "MOVE"]},
+          "U": {"LEFT": ["RIGHT", "MOVE"], "RIGHT": ["LEFT", "MOVE"], "UP": ["MOVE"], "DOWN": ["RIGHT", "RIGHT", "MOVE"]},
+          "D": {"LEFT": ["LEFT", "MOVE"], "RIGHT": ["RIGHT", "MOVE"], "UP": ["RIGHT", "RIGHT", "MOVE"], "DOWN": ["MOVE"]}}
 
 def findEnd(maze, moves, state):
     steps = []
@@ -122,7 +122,7 @@ def findEnd(maze, moves, state):
             j += 1
 
     if maze[j][i] == "X":
-        print("Found: " + moves)
+        #print("Found: " + moves)
         printMaze(maze, moves)
         print(steps)
         return True
@@ -146,4 +146,4 @@ while not findEnd(maze, add, state):
         if valid(maze, put):
             nums.put(put)
 
-print(nums.get())
+#print(nums.get())
