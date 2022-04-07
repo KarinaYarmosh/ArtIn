@@ -1,11 +1,10 @@
-import os
+import threading
 
 import pygame
-import random
 
 from Sztuczna.gameObjects.Saper import Sapper
 from Sztuczna.gameObjects.kratka import Grid
-from Sztuczna.gameTools.tools import resize_image
+from Sztuczna.AI.agent_final import Agent
 
 
 class Game():
@@ -17,6 +16,10 @@ class Game():
         self.clock = pygame.time.Clock()
         self.grid = Grid(grid_size, self.win)
         self.saper = Sapper(self.grid)
+        self.agent = Agent("R", self.grid.grid_matrix)
+        self.agent.findPath([5, 5])
+
+
 
     def start_game(self):
         while self.run:
