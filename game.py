@@ -4,8 +4,6 @@ import pygame
 
 from Sztuczna.gameObjects.Saper import Sapper
 from Sztuczna.gameObjects.kratka import Grid
-from Sztuczna.AI.agent_final import Agent
-
 
 class Game():
     def __init__(self, grid_size):
@@ -16,8 +14,6 @@ class Game():
         self.clock = pygame.time.Clock()
         self.grid = Grid(grid_size, self.win)
         self.saper = Sapper(self.grid)
-        self.agent = Agent("R", self.grid.grid_matrix)
-        self.agent.findPath([5, 5])
 
 
 
@@ -41,16 +37,20 @@ class Game():
 
             #print(f"pozycja gracza: x - {self.saper.x_pos}, y - {self.saper.y_pos}")
 
-            if keys[pygame.K_LEFT] and self.saper.x_pos - self.saper.step > -60 and self.grid.grid_matrix[(self.saper.x_pos - self.saper.step)//60][self.saper.y_pos//60] != 2:
+            if keys[pygame.K_LEFT] and self.saper.x_pos - self.saper.step > -60 \
+                    and self.grid.grid_matrix[(self.saper.x_pos - self.saper.step)//60][self.saper.y_pos//60] != 2:
                 self.saper.move_left()
 
-            if keys[pygame.K_RIGHT] and self.saper.x_pos + self.saper.step < self.win.get_width() and self.grid.grid_matrix[(self.saper.x_pos + self.saper.step)//60][self.saper.y_pos//60] != 2:
+            if keys[pygame.K_RIGHT] and self.saper.x_pos + self.saper.step < self.win.get_width() \
+                    and self.grid.grid_matrix[(self.saper.x_pos + self.saper.step)//60][self.saper.y_pos//60] != 2:
                 self.saper.move_right()
 
-            if keys[pygame.K_UP] and self.saper.y_pos - self.saper.step > -60 and self.grid.grid_matrix[self.saper.x_pos//60][(self.saper.y_pos - self.saper.step)//60] != 2:
+            if keys[pygame.K_UP] and self.saper.y_pos - self.saper.step > -60 \
+                    and self.grid.grid_matrix[self.saper.x_pos//60][(self.saper.y_pos - self.saper.step)//60] != 2:
                 self.saper.move_up()
 
-            if keys[pygame.K_DOWN] and self.saper.y_pos + self.saper.step < self.win.get_height() and self.grid.grid_matrix[self.saper.x_pos//60][(self.saper.y_pos + self.saper.step)//60] != 2:
+            if keys[pygame.K_DOWN] and self.saper.y_pos + self.saper.step < self.win.get_height() \
+                    and self.grid.grid_matrix[self.saper.x_pos//60][(self.saper.y_pos + self.saper.step)//60] != 2:
                 self.saper.move_down()
 
             if not self.grid.mines and not self.grid.granats and not self.saper.backpack:

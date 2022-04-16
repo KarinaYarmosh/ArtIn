@@ -8,7 +8,7 @@ from Sztuczna.gameTools.tools import resize_image
 class Grid():
 
     def __init__(self, size, window):
-        self.objects = {0: "grass.png", 1: "rock.jpg", 2:"duzykamien.jpg"}
+        self.objects = {0: "grass.png", 1: "rock.jpg", 2:"duzykamien.jpg", 3:"kaluza1.jpg"}
         self.window = window
         self.grid_matrix = []
         self.size = size
@@ -32,19 +32,41 @@ class Grid():
             matrix.append(list())
             row = matrix[i]
             for j in range(size[1]):
-                if (i==0 and j==0) or (i==0 and j==1) or (i==1 and j==0):
-                    row.append(random.randrange(0, 2))
+                if (i==2 and j==3) or (i==3 and j==6) or (i==1 and j==2) or (i==8 and j==8) or (i==3 and j==3) \
+                        or (i==0 and j==7) or (i==7 and j==1) or (i==9 and j==0) or (i==9 and j==0) or (i==7 and j==9) \
+                        or (i==2 and j==6) or (i==0 and j==2) or (i==0 and j==9) or (i==5 and j==8) or (i==4 and j==6) \
+                        or (i==3 and j==0) or (i==5 and j==1) or (i==9 and j==10) or (i==8 and j==11) or (i==13 and j==6) \
+                        or (i==7 and j==12) or (i==1 and j==13) or (i==0 and j==12):
+                    row.append(2)
                 else:
-                    row.append(random.randrange(0, 3))
+                    row.append(random.choice([0, 1, 3]))
             #random.shuffle(matrix[i])
         #random.shuffle(matrix)
-        print(matrix)
-        for i in range(len(matrix)):
-            #print(f"i={i} matrix={matrix[i]}")
-            for j in range(len(matrix[i])):
-                print(f"i={i} j={j} matrix={matrix[i][j]}")
-                if matrix[i][j] == 2 and (matrix[i][j-1]==2 or matrix[i-1][j-1]==2 or matrix[i-1][j]==2 or matrix[i][j-1]==2):
-                    matrix[i][j] = random.randrange(0, 2)
+        # print(matrix)
+        # for i in range(len(matrix)):
+        #     #print(f"i={i} matrix={matrix[i]}")
+        #     for j in range(len(matrix[i])):
+        #         print(f"i={i} j={j} matrix={matrix[i][j]}")
+        #         if matrix[i][j] == 2 and (matrix[i][j-1]==2 or matrix[i-1][j-1]==2 or matrix[i-1][j]==2 or matrix[i][j-1]==2):
+        #             matrix[i][j] = random.randrange(0, 2)
+        # matrix = []
+        # for i in range(size[0]):
+        #     matrix.append(list())
+        #     row = matrix[i]
+        #     for j in range(size[1]):
+        #         if (i==0 and j==0) or (i==0 and j==1) or (i==1 and j==0):
+        #             row.append(random.randrange(0, 2))
+        #         else:
+        #             row.append(random.randrange(0, 3))
+        #     #random.shuffle(matrix[i])
+        # #random.shuffle(matrix)
+        # print(matrix)
+        # for i in range(len(matrix)):
+        #     #print(f"i={i} matrix={matrix[i]}")
+        #     for j in range(len(matrix[i])):
+        #         print(f"i={i} j={j} matrix={matrix[i][j]}")
+        #         if matrix[i][j] == 2 and (matrix[i][j-1]==2 or matrix[i-1][j-1]==2 or matrix[i-1][j]==2 or matrix[i][j-1]==2):
+        #             matrix[i][j] = random.randrange(0, 2)
         print(matrix)
         self.grid_matrix = matrix
         self.draw_grid(matrix, self.window)
@@ -80,7 +102,8 @@ class Grid():
             l = int(random.randrange(0, self.SCREEN_HEIGHT, 60))
             m = int(random.randrange(0, self.SCREEN_WIDTH, 60))
             granat_pos = (l, m)
-            if (granat_pos not in self.mines.keys()) and (granat_pos not in self.granats.keys()) and (granat_pos != [0, 0]) and (self.grid_matrix[l//60][m//60] == 0 or self.grid_matrix[l//60][m//60] == 1):
+            if (granat_pos not in self.mines.keys()) and (granat_pos not in self.granats.keys()) \
+                    and (granat_pos != [0, 0]) and (self.grid_matrix[l//60][m//60] == 0 or self.grid_matrix[l//60][m//60] == 1):
                 self.granats[granat_pos] = Granade(granat_pos)
                 #print(self.granats)
                 counter += 1
