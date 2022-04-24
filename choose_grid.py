@@ -1,6 +1,6 @@
 from tkinter import *
 
-from game import Game
+from Sztuczna.game import Game
 
 
 class ChooseGameMode():
