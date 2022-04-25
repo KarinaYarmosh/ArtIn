@@ -7,8 +7,12 @@ class Sapper:
 
     def __init__(self, grid):
         self.saper_stay = pygame.image.load('sprites/saper.png')
-        self.saper_down = pygame.image.load('sprites/saper.png')
+        self.saper_ddown = pygame.image.load('sprites/saper_d.png')
+        self.saper_uup = pygame.image.load('sprites/saper_u.png')
+        self.saper_rright = pygame.image.load('sprites/saper_r.png')
+        self.saper_lleft = pygame.image.load('sprites/saper.png')
         self.saper_up = pygame.image.load('sprites/saper.png')
+        self.saper_down = pygame.image.load('sprites/saper.png')
         self.saper_left = pygame.image.load('sprites/saper_left.png')
         self.saper_right = pygame.image.load('sprites/saper_right.png')
         self.saper = pygame.image.load('sprites/saper.png')
@@ -21,7 +25,6 @@ class Sapper:
         )
         self.backpack = []
         self.backpack_load = 0
-        self.path = []
         self.direction = "D"
 
     def mines_do(self, pos):
@@ -128,92 +131,3 @@ class Sapper:
         self.saper_rect = self.saper.get_rect(
             center=(self.x_pos + 25, self.y_pos + 25)
         )
-
-    def find_path(self, matrix, end):
-        weight_matrix = [[0] * len(matrix) for i in range(len(matrix))]
-        weight_matrix[0][0] = 1
-        for i in range(len(matrix)):
-            for j in range(len(matrix[i])):
-                if matrix[i][j] == 1:
-                    matrix[i][j] = 0
-                elif matrix[i][j] == 2:
-                    matrix[i][j] = -1
-        matrix[0][0] = 1
-        start = [0, 0, 0, 0]
-        x_end = end[0]
-        y_end = end[1]
-        limit = list(range(len(matrix)))
-        # print(limit)
-        # for row in range(len(matrix)):
-        #     for column in range(len(matrix[row])):
-        #         print(f'{matrix[row][column]:{2}}', end=' ')
-        #     print()
-        frontier = SimpleQueue()
-        frontier.put(start)
-        while not frontier.empty() and matrix[x_end][y_end] == 0:
-            current = frontier.get()
-            x = current[0]
-            y = current[1]
-            direct = current[2]
-            number_of_turns = current[3]
-            # print("Where I")
-            # print(x, y, direct, number_of_turns)
-            if number_of_turns <= 2:
-                frontier.put([x, y, (direct+1) % 4, number_of_turns+1])
-            if (x + 1 in limit) and matrix[x + 1][y] == 0 and direct == 0 and number_of_turns <= 3:
-                matrix[x + 1][y] = matrix[x][y] + 1
-                weight_matrix[x + 1][y] = weight_matrix[x][y] + number_of_turns + 1
-                frontier.put([x + 1, y, 0, 0])
-            if (y + 1 in limit) and matrix[x][y + 1] == 0 and direct == 1 and number_of_turns <= 3:
-                matrix[x][y + 1] = matrix[x][y] + 1
-                weight_matrix[x][y + 1] = weight_matrix[x][y] + number_of_turns + 1
-                frontier.put([x, y + 1, 1, 0])
-            if (x - 1 in limit) and matrix[x - 1][y] == 0 and direct == 2 and number_of_turns <= 3:
-                weight_matrix[x - 1][y] = weight_matrix[x][y] + number_of_turns + 1
-                matrix[x - 1][y] = matrix[x][y] + 1
-                frontier.put([x - 1, y, 2, 0])
-            if (y - 1 in limit) and matrix[x][y - 1] == 0 and direct == 3 and number_of_turns <= 3:
-                weight_matrix[x][y - 1] = weight_matrix[x][y] + number_of_turns + 1
-                matrix[x][y - 1] = matrix[x][y] + 1
-                frontier.put([x, y - 1, 3, 0])
-            # print("Path")
-            # for row in range(len(matrix)):
-            #     for column in range(len(matrix[row])):
-            #         print(f'{matrix[row][column]:{2}}', end=' ')
-            #     print()
-            # print("Weight")
-            # for row in range(len(matrix)):
-            #     for column in range(len(matrix[row])):
-            #         print(f'{weight_matrix[row][column]:{2}}', end=' ')
-            #     print()
-        # print('\n')
-        # for row in matrix:
-        #     print(' '.join([str(elem) for elem in row]))
-        counter = matrix[x_end][y_end]
-        x = x_end
-        y = y_end
-        moves = []
-        while counter != 1:
-            if (x + 1 in limit) and matrix[x][y] - matrix[x + 1][y] == 1:
-                moves.append(1)
-                counter -= 1
-                x = x + 1
-                continue
-            if (y + 1 in limit) and matrix[x][y] - matrix[x][y + 1] == 1:
-                moves.append(4)
-                counter -= 1
-                y = y + 1
-                continue
-            if (x - 1 in limit) and matrix[x][y] - matrix[x - 1][y] == 1:
-                moves.append(3)
-                counter -= 1
-                x = x - 1
-                continue
-            if (y - 1 in limit) and matrix[x][y] - matrix[x][y - 1] == 1:
-                moves.append(2)
-                counter -= 1
-                y = y - 1
-                continue
-        moves.reverse()
-        self.path = moves
-

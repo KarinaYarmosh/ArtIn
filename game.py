@@ -25,7 +25,8 @@ class Game():
 
             if not self.find_path:
                 connect = connectAItoGame(self.grid.grid_matrix)
-                self.path = connect.get_BFS_path()
+                self.path = connect.get_AStar_path()
+                # self.path = connect.get_BFS_path()
                 self.find_path = True
                 print(self.path)
 
@@ -70,7 +71,15 @@ class Game():
             # obsługa zdarzeń
             keys = pygame.key.get_pressed()
 
-            self.saper.saper = self.saper.saper_stay
+            match self.saper.direction:
+                case 'D':
+                    self.saper.saper = self.saper.saper_ddown
+                case 'R':
+                    self.saper.saper = self.saper.saper_rright
+                case 'L':
+                    self.saper.saper = self.saper.saper_lleft
+                case 'U':
+                    self.saper.saper = self.saper.saper_uup
 
             if (self.saper.x_pos == 0) and (self.saper.y_pos == 0):
                 self.saper.backpack.clear()
