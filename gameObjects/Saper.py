@@ -22,6 +22,7 @@ class Sapper:
         self.backpack = []
         self.backpack_load = 0
         self.path = []
+        self.direction = "D"
 
     def mines_do(self, pos):
         # print(len(self.backpack))

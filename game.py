@@ -2,8 +2,9 @@ import threading
 
 import pygame
 
-from Sztuczna.gameObjects.Saper import Sapper
-from Sztuczna.gameObjects.kratka import Grid
+from gameObjects.Saper import Sapper
+from gameObjects.kratka import Grid
+from connectAItoGame import connectAItoGame
 
 class Game():
     def __init__(self, grid_size):
@@ -14,13 +15,53 @@ class Game():
         self.clock = pygame.time.Clock()
         self.grid = Grid(grid_size, self.win)
         self.saper = Sapper(self.grid)
-
-
+        self.find_path = False
+        self.path = []
 
     def start_game(self):
         while self.run:
             # opóźnienie w grze
-            pygame.time.delay(120)
+            pygame.time.delay(500)
+
+            if not self.find_path:
+                connect = connectAItoGame(self.grid.grid_matrix)
+                self.path = connect.get_BFS_path()
+                self.find_path = True
+                print(self.path)
+
+            if self.path:
+                step = self.path.pop(0)
+                direction = self.saper.direction
+                if step == 'L':
+                    match direction:
+                        case 'D':
+                            self.saper.direction = 'R'
+                        case 'R':
+                            self.saper.direction = 'U'
+                        case 'U':
+                            self.saper.direction = 'L'
+                        case 'L':
+                            self.saper.direction = 'D'
+                if step == 'R':
+                    match direction:
+                        case 'D':
+                            self.saper.direction = 'L'
+                        case 'L':
+                            self.saper.direction = 'U'
+                        case 'U':
+                            self.saper.direction = 'R'
+                        case 'R':
+                            self.saper.direction = 'D'
+                if step == 'M':
+                    match direction:
+                        case 'D':
+                            self.saper.move_down()
+                        case 'L':
+                            self.saper.move_left()
+                        case 'U':
+                            self.saper.move_up()
+                        case 'R':
+                            self.saper.move_right()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -62,6 +103,3 @@ class Game():
 
             # odświeżenie ekranu
             pygame.display.update()
-
-
-
