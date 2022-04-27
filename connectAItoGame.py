@@ -2,7 +2,7 @@ from AI.BFS import BFS
 from AI.AStar import AStar
 from collections import deque
 
-from AI.AStar import PriorityQueue
+from sztuczna_inteligencja.AI.AStar import PriorityQueue
 
 
 class connectAItoGame:
@@ -32,4 +32,4 @@ class connectAItoGame:
             for i2 in i:
                 print(i2, end=' ')
             print()
-        return AStar(self.grid_matrix, [7, 7]).graphsearch(PriorityQueue(), [], [0, 0], "D")
+        return AStar(self.grid_matrix, [7,7]).graphsearch(PriorityQueue(), [], [0, 0], "D")

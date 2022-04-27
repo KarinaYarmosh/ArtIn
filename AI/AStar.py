@@ -37,6 +37,7 @@ from collections import deque
 
 
 # matrix = [[2,3,3], [2,4,4], [2,4,4]]
+from sztuczna_inteligencja.gameObjects.elementy import Duzykamien
 
 
 def h(a, b):
@@ -55,6 +56,7 @@ def get_moves(node):
 class AStar:
     def __init__(self, matrix, endpoint):
         self.matrix = matrix
+        print(f"macierz{self.matrix}")
         self.endpoint = endpoint
 
     def goaltest(self, state):
@@ -118,22 +120,22 @@ class AStar:
 
             elif action == "M":
                 if direction == "L" and (0 <= state[1] - 1 <= len(self.matrix[0]) - 1) and (
-                        self.matrix[state[0]][state[1] - 1] != 2):
+                        self.matrix[state[0]][state[1] - 1] != Duzykamien().koszt):
                     node_new.state = [state[0], state[1] - 1]
                     node_new.action = action
                     states.append(node_new)
                 elif direction == "R" and (0 <= state[1] + 1 <= len(self.matrix[0]) - 1) and (
-                        self.matrix[state[0]][state[1] + 1] != 2):
+                        self.matrix[state[0]][state[1] + 1] != Duzykamien().koszt):
                     node_new.state = [state[0], state[1] + 1]
                     node_new.action = action
                     states.append(node_new)
                 elif direction == "U" and (0 <= state[0] - 1 <= len(self.matrix) - 1) and (
-                        self.matrix[state[0] - 1][state[1]] != 2):
+                        self.matrix[state[0] - 1][state[1]] != Duzykamien().koszt):
                     node_new.state = [state[0] - 1, state[1]]
                     node_new.action = action
                     states.append(node_new)
                 elif direction == "D" and (0 <= state[0] + 1 <= len(self.matrix) - 1) and (
-                        self.matrix[state[0] + 1][state[1]] != 2):
+                        self.matrix[state[0] + 1][state[1]] != Duzykamien().koszt):
                     node_new.state = [state[0] + 1, state[1]]
                     node_new.action = action
                     states.append(node_new)
@@ -219,22 +221,4 @@ class PriorityQueue:
         return any(item == pair[1] for pair in self.queue)
 
 
-# pq = PriorityQueue()
-# pq.put("suck", 1)
-# pq.put("fuckwithme", 2)
-# pq.put("lickmyasshole", 3)
-# pq.put("eatmyshitfromass", 4)
-# print(pq.get() and pq.queue)
-# print(h([0, 0], [12, 12]))
 
-# pq = PriorityQueue()
-# pq.put(node([0, 0], "D"), f(node([0, 0], "D")))
-# pq.put(node([0, 0], "L"), f(node([0, 0], "L")))
-# pq.put(node([0, 0], "R"), f(node([0, 0], "R")))
-# print(pq)
-
-# node1 = node([0, 0], "D")
-# node2 = node([0, 0], "L")
-# node1.cost = 10
-# node2.cost = 10
-# print(node1 == node2)

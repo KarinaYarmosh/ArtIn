@@ -1,4 +1,4 @@
-from choose_grid import ChooseGameMode
+from sztuczna_inteligencja.choose_grid import ChooseGameMode
 
 
 class Main:

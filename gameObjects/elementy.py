@@ -13,32 +13,32 @@ class Elementy(abstract):
 
 class Grass(Elementy):
 
-    def __init__(self, location):
-        self.koszt = 0
+    def __init__(self):
+        self.koszt = 1
 
     def elementy_type(self):
         return "grass"
 
 class Rock(Elementy):
 
-    def __init__(self, location):
-        self.koszt = 1
+    def __init__(self):
+        self.koszt = 2
 
     def elementy_type(self):
         return "rock"
 
 class Duzykamien(Elementy):
 
-    def __init__(self, location):
-        self.koszt = 100
+    def __init__(self):
+        self.koszt = 5
 
     def elementy_type(self):
         return "duzykamien"
 
 class Kaluza(Elementy):
 
-    def __init__(self, location):
-        self.koszt = 3
+    def __init__(self):
+        self.koszt = 4
 
     def elementy_type(self):
         return "kaluza"
