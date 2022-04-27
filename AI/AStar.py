@@ -44,10 +44,6 @@ def h(a, b):
     return abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 
-def goaltest(state):
-    return state == [12, 12]
-
-
 def get_moves(node):
     moves = []
     while node.parent is not None:
@@ -57,8 +53,12 @@ def get_moves(node):
 
 
 class AStar:
-    def __init__(self, matrix):
+    def __init__(self, matrix, endpoint):
         self.matrix = matrix
+        self.endpoint = endpoint
+
+    def goaltest(self, state):
+        return state == self.endpoint
 
     def g(self, state):
         # try:
@@ -74,7 +74,7 @@ class AStar:
         return state.cost
 
     def f(self, state):
-        return self.g(state) + h(state.state, [12, 12])
+        return self.g(state) + h(state.state, self.endpoint)
 
     def succ(self, state, direction):
         states = []
@@ -149,7 +149,7 @@ class AStar:
 
             elem = fringe.get()
 
-            if goaltest(elem.state):
+            if self.goaltest(elem.state):
                 return get_moves(elem)
 
             explored.append(elem)
